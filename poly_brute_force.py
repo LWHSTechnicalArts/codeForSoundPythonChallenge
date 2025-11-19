@@ -6,7 +6,6 @@ class BruteForcePolyphonyHandler:
     def __init__(self, list_of_command_lists):
         self.list_of_command_lists = list_of_command_lists
         self.active_notes = []
-        self.current_list_index = 0
     
     def process_command(self, command):
         """Process a single command to update active notes."""
@@ -20,18 +19,10 @@ class BruteForcePolyphonyHandler:
             if key_number in self.active_notes:  # O(n) search
                 self.active_notes.remove(key_number)  # O(n) removal
     
-    def process_command_list(self):
-        """Process one command list and return current active notes."""
-        if self.current_list_index >= len(self.list_of_command_lists):
-            return self.active_notes.copy()
-        
-        command_list = self.list_of_command_lists[self.current_list_index]
+    def process_command_list(self, command_list):
         for command in command_list:
             self.process_command(command)
-        
-        self.current_list_index += 1
         return self.active_notes.copy()
-
 
 # ==================== TEST CASES ====================
 
@@ -84,9 +75,9 @@ for test in test_cases:
     print(test["name"])
     handler = BruteForcePolyphonyHandler(test["input"])
     
-    for i in range(len(test["input"])):
-        result = handler.process_command_list()
-        expected = test["expected"][i]
-        match = "✓" if result == expected else "✗"
-        print(f"  After list {i+1}: {result} {match}")
+    for i, command_list in enumerate(test["input"]):
+            result = handler.process_command_list(command_list)
+            expected = test["expected"][i]
+            match = "✓" if result == expected else "✗"
+            print(f"  After list {i+1}: {result} {match}")
     print()
