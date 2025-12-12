@@ -1,7 +1,7 @@
 import math
 
-def direct_sin_lfo(num_samples, frequency=1.0, sample_rate=44100):
-    """Generate LFO by calculating sin() each time"""
+def direct_sin_oscillator(num_samples, frequency=1.0, sample_rate=44100):
+    """Generate sample values by calculating sin() each time"""
     output = []
     phase = 0.0
     phase_increment = frequency / sample_rate
